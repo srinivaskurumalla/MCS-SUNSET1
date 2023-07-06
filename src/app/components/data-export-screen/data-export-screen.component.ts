@@ -1,4 +1,3 @@
-import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { DBService } from 'src/app/Services/db.service';
 export interface DataCategories {
@@ -28,25 +27,15 @@ export class DataExportScreenComponent implements OnInit {
   groupDataSource: DataCategories[] = [];
   tableDataSource: TablesToExport[] = [];
   exportTables: TablesToExport[] = [];
+  selectedTableCount = 0;
 
   ngOnInit(): void {
-    this.DbService.getAllGroups().subscribe(
-      (data) => {
-        debugger;
-        this.groupDataSource = data;
-      },
-      (err) => console.error(err)
-    );
+    this.getAllGroups();
+    this.getAllTables()
 
-    this.DbService.getAllTables().subscribe(
-      (data) => {
-        this.tableDataSource = data;
-      },
-      (err) => console.error(err)
-    );
+
   }
-  // GROUP_DATA: DataCategories[] = []
-  // TABLE_DATA : TablesToExport[] = []
+
   displayedColumns: string[] = ['GroupName', 'GroupDescription', 'Include'];
   displayedColumns1: string[] = [
     'TableName',
@@ -56,9 +45,6 @@ export class DataExportScreenComponent implements OnInit {
     'ErrorMessage',
   ];
 
-  // tableDataSource = TABLE_DATA;
-
-  // Date and Time
 
   // this.currentDate = new Date();
 
@@ -74,80 +60,94 @@ export class DataExportScreenComponent implements OnInit {
   amPm = this.currentDate.getHours() < 12 ? 'AM' : 'PM';
   formattedDateTime = `${this.month}-${this.day}-${this.year} ${this.hours}:${this.minutes} ${this.amPm}`;
 
-  //Export selected tables
 
+
+  getAllGroups() {
+    this.DbService.getAllGroups().subscribe(
+      (data) => {
+        this.groupDataSource = data;
+      },
+      (err) => console.error(err)
+    );
+  }
+
+  getAllTables() {
+    this.DbService.getAllTables().subscribe(
+      (data) => {
+        this.tableDataSource = data;
+      },
+      (err) => console.error(err)
+    );
+  }
+
+    //Export selected tables
   ExportSelectedTables() {
-    // console.log(ELEMENT_DATA)
+
     let counter = 0;
 
-    if (this.exportTables.length > 0) {
-      this.exportTables.length = 0;
-
-    }
+    this.exportTables = []  //clear previous selected tables
     for (let t of this.tableDataSource) {
       if (t.Include) {
         console.log(t);
-       // this.DbService.exportTables()
         this.exportTables.push(t);
-       // this.exportTables.p
-
 
         counter++;
       }
     }
     console.log('newly exported tables:', JSON.stringify(this.exportTables));
 
-
-
-
-    this.DbService.exportTables(this.exportTables).subscribe(
-      (response) => {
-        alert(`Exported selected ${counter} tables data`);
-      },
-      (error) => {
-        alert('Error while posting data:' + error);
-      }
-    )
-
-    // this.DbService.deletePreviouslyExportedData().subscribe(
-    //   () => {
-    //     alert('delete works')
-    //   }
-    // )
-    // debugger
-    // this.DbService.deletePreviouslyExportedData().subscribe(
-    //   () => {
-
-    //   },
-    //   (error) => console.log(error)
-
-    // )
-
+    if (counter > 0) {
+      this.DbService.exportTables(this.exportTables).subscribe(
+        () => {
+          alert(`Exported selected ${counter} tables data`);
+        },
+        (error) => {
+          alert('Error while posting data:' + error);
+        }
+      );
+    } else {
+      alert('Please select tables to exportF');
+    }
   }
 
-  updateChildCheckboxes(Id: number) {
-    for (let t of this.tableDataSource) {
-      if (t.GroupDataId === Id) {
-        t.Include = !t.Include;
+  updateChildCheckboxes(groupId: number): void {
+
+    const parentTable = this.groupDataSource.find((g) => g.Id === groupId);
+
+    if (parentTable) {
+      const allChildrenChecked = this.tableDataSource
+        .filter((t) => t.GroupDataId === groupId)
+        .every((t) => t.Include);
+
+      const shouldCheckChildren = parentTable.Include && !allChildrenChecked;
+
+      for (const t of this.tableDataSource) {
+        if (t.GroupDataId === groupId) {
+          t.Include = shouldCheckChildren;
+        }
       }
+      this.updateSelectedTableCount(); // Update the count
     }
   }
 
   updateParentCheckboxes(groupDataId: number): void {
-    let parentTable = this.groupDataSource.find((g) => g.Id === groupDataId);
 
-    //debugger
+    const parentTable = this.groupDataSource.find((g) => g.Id === groupDataId);
+
     if (parentTable) {
-      let allChildrenUnchecked = true;
-
-      for (let t of this.tableDataSource) {
-        if (t.GroupDataId === groupDataId && t.Include) {
-          allChildrenUnchecked = false;
-          break;
-        }
-      }
+      const allChildrenUnchecked = this.tableDataSource
+        .filter((t) => t.GroupDataId === groupDataId)
+        .every((t) => !t.Include);
 
       parentTable.Include = !allChildrenUnchecked;
     }
+    this.updateSelectedTableCount(); // Update the count
   }
+
+  updateSelectedTableCount(): void {
+    this.selectedTableCount = this.tableDataSource.filter(
+      (t) => t.Include
+    ).length;
+  }
+
 }

@@ -1,7 +1,7 @@
 
 .mdc-data-table__header-cell{
   color: #167ed3;
-  background-color: #5b5d5f24 !important;
+  /* background-color: rgba(17, 16, 16, 0.594) !important; */
   /* border: 1px solid blue; */
 }
 
