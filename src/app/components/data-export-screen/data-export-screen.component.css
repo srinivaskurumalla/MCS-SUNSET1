@@ -1,0 +1,20 @@
+
+.mdc-data-table__header-cell{
+  color: #167ed3;
+  background-color: #5b5d5f24 !important;
+  /* border: 1px solid blue; */
+}
+
+
+.table-container {
+  max-height: 400px; /* Adjust the maximum height as needed */
+  overflow-y: auto;
+
+}
+/* .table-container .tableData {
+  border: 2px solid rgba(116, 193, 238, 0);
+} */
+
+
+
+

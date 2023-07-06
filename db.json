@@ -1,0 +1,216 @@
+{
+  "posts": [
+    {
+      "Id": 1,
+      "title": "json-server",
+      "author": "typicode"
+    }
+  ],
+  "comments": [
+    {
+      "Id": 1,
+      "body": "some comment",
+      "postId": 1
+    }
+  ],
+  "profile": {
+    "name": "typicode"
+  },
+  "GroupData": [
+    {
+      "Id": 1,
+      "GroupName": "CLAIMS",
+      "GroupDescription": "Hydrogen",
+      "Include": false
+    },
+    {
+      "Id": 2,
+      "GroupName": "ENCOUNTERS",
+      "GroupDescription": "Helium",
+      "Include": false
+    },
+    {
+      "Id": 3,
+      "GroupName": "MEMBERS",
+      "GroupDescription": "Lithium",
+      "Include": false
+    },
+    {
+      "Id": 4,
+      "GroupName": "PROVIdERS",
+      "GroupDescription": "Beryllium",
+      "Include": false
+    },
+    {
+      "Id": 5,
+      "GroupName": "VENDORS",
+      "GroupDescription": "Beryllium",
+      "Include": false
+    },
+    {
+      "Id": 6,
+      "GroupName": "EDI",
+      "GroupDescription": "Beryllium",
+      "Include": false
+    },
+    {
+      "Id": 7,
+      "GroupName": "GENERAL",
+      "GroupDescription": "Beryllium",
+      "Include": false
+    },
+    {
+      "Id": 8,
+      "GroupName": "SECURITY",
+      "GroupDescription": "Beryllium",
+      "Include": false
+    }
+  ],
+  "TableData": [
+    {
+      "Id": 1,
+      "GroupDataId": 1,
+      "TableName": "AdjudicationDetail",
+      "TableDescription": "Hydrogen",
+      "Include": false,
+      "ExportLevel": 1,
+      "ErrorMessage": ""
+    },
+    {
+      "Id": 2,
+      "GroupDataId": 1,
+      "TableName": "claimAudit",
+      "TableDescription": "Helium",
+      "Include": false,
+      "ExportLevel": 1,
+      "ErrorMessage": ""
+    },
+    {
+      "Id": 3,
+      "GroupDataId": 1,
+      "TableName": "claimDetail",
+      "TableDescription": "Lithium",
+      "Include": false,
+      "ExportLevel": 1,
+      "ErrorMessage": ""
+    },
+    {
+      "Id": 4,
+      "GroupDataId": 1,
+      "TableName": "claimsHeader",
+      "TableDescription": "Beryllium",
+      "Include": false,
+      "ExportLevel": 1,
+      "ErrorMessage": ""
+    },
+    {
+      "Id": 5,
+      "GroupDataId": 1,
+      "TableName": "claimImageDetail",
+      "TableDescription": "Boron",
+      "Include": false,
+      "ExportLevel": 1,
+      "ErrorMessage": ""
+    },
+    {
+      "Id": 6,
+      "GroupDataId": 1,
+      "TableName": "claimImageHeader",
+      "TableDescription": "Boron",
+      "Include": false,
+      "ExportLevel": 1,
+      "ErrorMessage": ""
+    },
+    {
+      "Id": 7,
+      "GroupDataId": 1,
+      "TableName": "claimMessage",
+      "TableDescription": "Boron",
+      "Include": false,
+      "ExportLevel": 1,
+      "ErrorMessage": ""
+    },
+    {
+      "Id": 8,
+      "GroupDataId": 1,
+      "TableName": "claimRepriceDetail",
+      "TableDescription": "Boron",
+      "Include": false,
+      "ExportLevel": 2,
+      "ErrorMessage": ""
+    },
+    {
+      "Id": 9,
+      "GroupDataId": 1,
+      "TableName": "claimToAuth",
+      "TableDescription": "Boron",
+      "Include": false,
+      "ExportLevel": 1,
+      "ErrorMessage": ""
+    },
+    {
+      "Id": 10,
+      "GroupDataId": 2,
+      "TableName": "EncAudit",
+      "TableDescription": "Boron",
+      "Include": false,
+      "ExportLevel": 1,
+      "ErrorMessage": ""
+    },
+    {
+      "Id": 11,
+      "GroupDataId": 2,
+      "TableName": "EncDetl",
+      "TableDescription": "Boron",
+      "Include": false,
+      "ExportLevel": 1,
+      "ErrorMessage": ""
+    },
+    {
+      "Id": 12,
+      "GroupDataId": 2,
+      "TableName": "EncError",
+      "TableDescription": "Boron",
+      "Include": false,
+      "ExportLevel": 1,
+      "ErrorMessage": ""
+    },
+    {
+      "Id": 13,
+      "GroupDataId": 2,
+      "TableName": "EncHdr",
+      "TableDescription": "Boron",
+      "Include": false,
+      "ExportLevel": 1,
+      "ErrorMessage": ""
+    },
+    {
+      "Id": 14,
+      "GroupDataId": 2,
+      "TableName": "EncLog",
+      "TableDescription": "Boron",
+      "Include": false,
+      "ExportLevel": 1,
+      "ErrorMessage": ""
+    },
+    {
+      "Id": 15,
+      "GroupDataId": 2,
+      "TableName": "IdHfsRemit",
+      "TableDescription": "Boron",
+      "Include": false,
+      "ExportLevel": 1,
+      "ErrorMessage": ""
+    },
+    {
+      "Id": 16,
+      "GroupDataId": 2,
+      "TableName": "RemitDetail",
+      "TableDescription": "Boron",
+      "Include": false,
+      "ExportLevel": 1,
+      "ErrorMessage": ""
+    }
+  ],
+  "ExportTables":[]
+}
