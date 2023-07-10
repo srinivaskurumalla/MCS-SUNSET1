@@ -79,13 +79,24 @@
         >DATA CATEGORIES</b
       >
 
-      <table mat-table [dataSource]="groupDataSource" class="mat-elevation-z8 mt-2">
-        <ng-container *ngFor="let column of displayedColumns" [matColumnDef]="column">
+      <table
+        mat-table
+        [dataSource]="groupDataSource"
+        class="mat-elevation-z8 mt-2"
+      >
+        <ng-container
+          *ngFor="let column of displayedColumns"
+          [matColumnDef]="column"
+        >
           <th mat-header-cell *matHeaderCellDef>{{ column }}</th>
           <td mat-cell *matCellDef="let element">
             <ng-container [ngSwitch]="column">
               <ng-container *ngSwitchCase="'Include'">
-                <mat-checkbox [(ngModel)]="element.Include" (change)="updateChildCheckboxes(element.Id)"> </mat-checkbox>
+                <mat-checkbox
+                  [(ngModel)]="element.Include"
+                  (change)="updateChildCheckboxes(element.Id)"
+                >
+                </mat-checkbox>
               </ng-container>
               <ng-container *ngSwitchDefault>
                 {{ element[column] }}
@@ -97,34 +108,7 @@
         <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
         <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
       </table>
-
-
-      <!-- <table mat-table [dataSource]="groupDataSource" class="mat-elevation-z8 mt-2">
-        Note that these columns can be defined in any order.
-              The actual rendered columns are set as a property on the row definition"
-
-        <ng-container matColumnDef="GroupName">
-          <th mat-header-cell *matHeaderCellDef>Group Name</th>
-          <td mat-cell *matCellDef="let element">{{ element.GroupName }}</td>
-        </ng-container>
-
-        <ng-container matColumnDef="GroupDescription">
-          <th mat-header-cell *matHeaderCellDef>Group Description</th>
-          <td mat-cell *matCellDef="let element">
-            {{ element.GroupDescription }}
-          </td>
-        </ng-container>
-
-        <ng-container matColumnDef="Include">
-          <th mat-header-cell *matHeaderCellDef>Include</th>
-          <td mat-cell *matCellDef="let element">
-            <mat-checkbox [(ngModel)]="element.Include" (change)="updateChildCheckboxes(element.GroupName)"></mat-checkbox>
-          </td>
-        </ng-container>
-
-        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-        <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
-      </table> -->
+      >
       <div class="input-group mb-3 mt-4">
         <label for="" class="mt-2">Find Category :</label>
         <input type="text" class="form-control ms-2" placeholder="" />
@@ -134,48 +118,58 @@
         <div class="btn btn-secondary">EXPORT DATA</div>
       </div> -->
       <div class="d-flex justify-content-center align-items-end mt-auto">
-        <button class="btn btn-secondary" (click)="ExportSelectedTables()">EXPORT DATA</button>
+        <button class="btn btn-secondary" (click)="ExportSelectedTables()">
+          EXPORT DATA
+        </button>
       </div>
     </div>
     <div class="col-8">
-      <div class="d-flex align-items-start">
-        <b
-          style="color: #e610e6; background-color: #f2edf2; height: 20px"
-          class="d-inline-block px-2 mt-1"
-          >TABLES TO EXPORT</b
-        >
-
-        <div class="input-group" style="width: 400px">
-          <label for="" class="mt-1 ms-3">Find Category :</label>
-          <input
-            type="text"
-            class="form-control ms-2"
-            placeholder=""
-            style="height: 30px"
-          />
-          <button
-            class="btn btn-secondary ms-2 text-align-center"
-            type="button"
-            style="height: 30px"
+      <div class="row">
+        <div class="d-flex align-items-start">
+          <b
+            style="color: #e610e6; background-color: #f2edf2; height: 20px"
+            class="d-inline-block px-2 mt-2 col-3"
+            >TABLES TO EXPORT</b
           >
-            Search
-          </button>
 
+          <div class="input-group">
+            <!-- <mat-form-field>
+              <mat-label>Filter</mat-label>
+              <input
+              type="text"
+              class="form-control ms-2"
+                matInput
+                (keyup)="applyFilter($event)"
+                placeholder="Ex. Mia"
+                #input
+              />
+            </mat-form-field> -->
+            <input id="inputRef" type="text" class="form-control ms-2 half-width" (keyup)="applyFilter($event)" placeholder="Search" #inputRef />
+          <!-- <button class="btn btn-outline-secondary" type="button" (click)="applyFilter($event)">Search</button> -->
+          </div>
+          <h3 class="ms-2 col-3">Selected Tables: {{ selectedTableCount }}</h3>
         </div>
-        <h3 class="ms-2">Selected Tables : {{selectedTableCount}}</h3>
-
       </div>
 
-
       <div class="table-container">
-        <table mat-table [dataSource]="tableDataSource" class=" mat-elevation-z8 mt-1 mb-3">
+        <table
+          mat-table
+          [dataSource]="searchTableData"
+          class="mat-elevation-z8 mt-1 mb-3"
+          matSort
+        >
           <!-- Generate table columns dynamically -->
           <ng-container *ngFor="let column of displayedColumns1">
             <ng-container [matColumnDef]="column">
-              <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ column }}</th>
+              <th mat-header-cell *matHeaderCellDef mat-sort-header>
+                {{ column }}
+              </th>
               <td mat-cell *matCellDef="let element">
                 <ng-container *ngIf="column === 'Include'">
-                  <mat-checkbox [(ngModel)]="element.Include" (change)="updateParentCheckboxes(element.GroupDataId)"></mat-checkbox>
+                  <mat-checkbox
+                    [(ngModel)]="element.Include"
+                    (change)="updateParentCheckboxes(element.GroupDataId)"
+                  ></mat-checkbox>
                 </ng-container>
                 <ng-container *ngIf="column !== 'Include'">
                   {{ element[column] }}
@@ -185,11 +179,26 @@
           </ng-container>
 
           <!-- Define header and row definitions -->
-          <tr mat-header-row *matHeaderRowDef="displayedColumns1; sticky: true" ></tr>
+          <tr
+            mat-header-row
+            *matHeaderRowDef="displayedColumns1; sticky: true"
+          ></tr>
           <tr mat-row *matRowDef="let row; columns: displayedColumns1"></tr>
-        </table>
 
-    </div>
+          <!-- Row shown when there is no matching data. -->
+          <ng-container *ngIf="searchTableData.filteredData.length === 0">
+            <tr class="mat-row" *matNoDataRow>
+              <td class="mat-cell" [attr.colspan]="displayedColumns1.length">
+                No data matching with "{{ inputRef.value }}"
+              </td>
+            </tr>
+          </ng-container>
+        </table>
+        <mat-paginator
+          [pageSizeOptions]="[5, 10, 25, 100]"
+          aria-label="Select page of users"
+        ></mat-paginator>
+      </div>
     </div>
   </div>
 </div>

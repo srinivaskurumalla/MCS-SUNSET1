@@ -1,5 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
+import { MatTableDataSource } from '@angular/material/table';
 import { DBService } from 'src/app/Services/db.service';
+
+import {MatPaginator} from '@angular/material/paginator';
+import {MatSort} from '@angular/material/sort';
 export interface DataCategories {
   Id: number;
   GroupName: string;
@@ -21,19 +25,25 @@ export interface TablesToExport {
   selector: 'app-data-export-screen',
   templateUrl: './data-export-screen.component.html',
   styleUrls: ['./data-export-screen.component.css'],
-})
-export class DataExportScreenComponent implements OnInit {
-  constructor(private DbService: DBService) {}
+ })
+export class DataExportScreenComponent implements OnInit, AfterViewInit {
+  constructor(private DbService: DBService) {
+    debugger
+
+     // Assign the data to the data source for the table to render
+  }
   groupDataSource: DataCategories[] = [];
   tableDataSource: TablesToExport[] = [];
   exportTables: TablesToExport[] = [];
   selectedTableCount = 0;
+  searchTableData!: MatTableDataSource<TablesToExport>;
+
 
   ngOnInit(): void {
     this.getAllGroups();
     this.getAllTables()
 
-
+//console.log('table data'+this.tableDataSource)
   }
 
   displayedColumns: string[] = ['GroupName', 'GroupDescription', 'Include'];
@@ -46,6 +56,14 @@ export class DataExportScreenComponent implements OnInit {
   ];
 
 
+  @ViewChild(MatPaginator) paginator!: MatPaginator;
+  @ViewChild(MatSort) sort!: MatSort;
+
+  ngAfterViewInit() {
+    debugger
+    this.searchTableData.paginator = this.paginator;
+    this.searchTableData.sort = this.sort;
+  }
   // this.currentDate = new Date();
 
   // formattedDateTime = this.this.currentDate.toLocaleString('en-US', { dateStyle: 'short', timeStyle: 'short' });
@@ -61,6 +79,23 @@ export class DataExportScreenComponent implements OnInit {
   formattedDateTime = `${this.month}-${this.day}-${this.year} ${this.hours}:${this.minutes} ${this.amPm}`;
 
 
+  // applyFilter(filterValue: string) {
+  //   const trimmedValue = filterValue.trim().toLowerCase();
+  //   this.searchTableData.filter = trimmedValue;
+
+  //   if (this.searchTableData.paginator) {
+  //     this.searchTableData.paginator.firstPage();
+  //   }
+  // }
+
+  applyFilter(event: Event) {
+    const filterValues = (event.target as HTMLInputElement).value;
+    this.searchTableData.filter = filterValues.trim().toLowerCase();
+
+    if (this.searchTableData.paginator) {
+          this.searchTableData.paginator.firstPage();
+        }
+  }
 
   getAllGroups() {
     this.DbService.getAllGroups().subscribe(
@@ -75,6 +110,10 @@ export class DataExportScreenComponent implements OnInit {
     this.DbService.getAllTables().subscribe(
       (data) => {
         this.tableDataSource = data;
+        this.searchTableData = new MatTableDataSource(this.tableDataSource);
+        console.log('table data:', JSON.stringify(this.tableDataSource));
+      console.log('searched data:', JSON.stringify(this.searchTableData.data));
+
       },
       (err) => console.error(err)
     );

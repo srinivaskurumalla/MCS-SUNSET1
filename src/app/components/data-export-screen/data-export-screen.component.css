@@ -4,13 +4,17 @@
   /* background-color: rgba(17, 16, 16, 0.594) !important; */
   /* border: 1px solid blue; */
 }
+.half-width {
+  width: 50%;
+}
 
 
-.table-container {
-  max-height: 400px; /* Adjust the maximum height as needed */
+
+/* .table-container {
+  max-height: 400px;
   overflow-y: auto;
 
-}
+} */
 /* .table-container .tableData {
   border: 2px solid rgba(116, 193, 238, 0);
 } */
