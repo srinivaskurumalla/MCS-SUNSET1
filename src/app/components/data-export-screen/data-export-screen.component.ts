@@ -3,7 +3,7 @@ import { MatTableDataSource } from '@angular/material/table';
 import { DBService } from 'src/app/Services/db.service';
 
 import {MatPaginator} from '@angular/material/paginator';
-import {MatSort} from '@angular/material/sort';
+import {MatSort,Sort} from '@angular/material/sort';
 export interface DataCategories {
   Id: number;
   GroupName: string;
@@ -37,6 +37,8 @@ export class DataExportScreenComponent implements OnInit, AfterViewInit {
   exportTables: TablesToExport[] = [];
   selectedTableCount = 0;
   searchTableData!: MatTableDataSource<TablesToExport>;
+  searchGroupData!: MatTableDataSource<DataCategories>;
+  selectedFile: File | null = null;
 
 
   ngOnInit(): void {
@@ -56,13 +58,17 @@ export class DataExportScreenComponent implements OnInit, AfterViewInit {
   ];
 
 
-  @ViewChild(MatPaginator) paginator!: MatPaginator;
-  @ViewChild(MatSort) sort!: MatSort;
+  @ViewChild('tablePaginator') tablePaginator!: MatPaginator;
+  @ViewChild('groupPaginator') groupPaginator!: MatPaginator;
+  @ViewChild('tableTblSort') tableSort!: MatSort;
+  @ViewChild('groupTblSort') groupSort!: MatSort;
 
   ngAfterViewInit() {
     debugger
-    this.searchTableData.paginator = this.paginator;
-    this.searchTableData.sort = this.sort;
+    this.searchTableData.paginator = this.tablePaginator;
+    this.searchTableData.sort = this.tableSort;
+    this.searchGroupData.paginator = this.groupPaginator;
+    this.searchGroupData.sort = this.groupSort;
   }
   // this.currentDate = new Date();
 
@@ -79,14 +85,14 @@ export class DataExportScreenComponent implements OnInit, AfterViewInit {
   formattedDateTime = `${this.month}-${this.day}-${this.year} ${this.hours}:${this.minutes} ${this.amPm}`;
 
 
-  // applyFilter(filterValue: string) {
-  //   const trimmedValue = filterValue.trim().toLowerCase();
-  //   this.searchTableData.filter = trimmedValue;
+  fileSelected(event: any) {
+    this.selectedFile = event.target.files[0];
+  }
 
-  //   if (this.searchTableData.paginator) {
-  //     this.searchTableData.paginator.firstPage();
-  //   }
-  // }
+  clearFile(input: any) {
+    input.value = ''; // Clear the value of the file input field
+    this.selectedFile = null; // Reset the selected file
+  }
 
   applyFilter(event: Event) {
     const filterValues = (event.target as HTMLInputElement).value;
@@ -96,11 +102,22 @@ export class DataExportScreenComponent implements OnInit, AfterViewInit {
           this.searchTableData.paginator.firstPage();
         }
   }
+  applyFilterGroup(str: string) {
+    const trimmedValue = str.trim().toLowerCase();
+       this.searchGroupData.filter = trimmedValue;
 
+    if (this.searchGroupData.paginator) {
+          this.searchGroupData.paginator.firstPage();
+        }
+  }
   getAllGroups() {
     this.DbService.getAllGroups().subscribe(
       (data) => {
         this.groupDataSource = data;
+        this.searchGroupData = new MatTableDataSource(this.groupDataSource);
+        console.log('group data:', JSON.stringify(this.groupDataSource));
+        console.log('searched group data:', JSON.stringify(this.searchGroupData.data));
+
       },
       (err) => console.error(err)
     );

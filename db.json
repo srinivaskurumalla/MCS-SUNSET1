@@ -213,16 +213,6 @@
     }
   ],
   "ExportTables": [
-    [
-      {
-        "Id": 1,
-        "GroupDataId": 1,
-        "TableName": "AdjudicationDetail",
-        "TableDescription": "Hydrogen",
-        "Include": true,
-        "ExportLevel": 1,
-        "ErrorMessage": ""
-      }
-    ]
+   
   ]
 }
