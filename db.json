@@ -213,6 +213,61 @@
     }
   ],
   "ExportTables": [
-   
+    [
+      {
+        "Id": 4,
+        "GroupDataId": 1,
+        "TableName": "claimsHeader",
+        "TableDescription": "Beryllium",
+        "Include": true,
+        "ExportLevel": 1,
+        "ErrorMessage": ""
+      },
+      {
+        "Id": 5,
+        "GroupDataId": 1,
+        "TableName": "claimImageDetail",
+        "TableDescription": "Boron",
+        "Include": true,
+        "ExportLevel": 1,
+        "ErrorMessage": ""
+      },
+      {
+        "Id": 6,
+        "GroupDataId": 1,
+        "TableName": "claimImageHeader",
+        "TableDescription": "Boron",
+        "Include": true,
+        "ExportLevel": 1,
+        "ErrorMessage": ""
+      },
+      {
+        "Id": 7,
+        "GroupDataId": 1,
+        "TableName": "claimMessage",
+        "TableDescription": "Boron",
+        "Include": true,
+        "ExportLevel": 1,
+        "ErrorMessage": ""
+      },
+      {
+        "Id": 8,
+        "GroupDataId": 1,
+        "TableName": "claimRepriceDetail",
+        "TableDescription": "Boron",
+        "Include": true,
+        "ExportLevel": 2,
+        "ErrorMessage": ""
+      },
+      {
+        "Id": 9,
+        "GroupDataId": 1,
+        "TableName": "claimToAuth",
+        "TableDescription": "Boron",
+        "Include": true,
+        "ExportLevel": 1,
+        "ErrorMessage": ""
+      }
+    ]
   ]
 }
